@@ -6,8 +6,13 @@ export default function Product_Info() {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const BASE_URL =
+    window.location.hostname === "localhost"
+      ? "http://localhost:3001"
+      : "https://sellhear-buyhear.onrender.com"; // <-- your deployed backend URL
+
   useEffect(() => {
-    fetch(`http://localhost:3001/${type}/${id}`)
+    fetch(`${BASE_URL}/${type}/${id}`)
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch");
         return res.json();
@@ -20,13 +25,13 @@ export default function Product_Info() {
         console.error("Error fetching data:", err);
         setLoading(false);
       });
-  }, [id, type]);
+  }, [id, type, BASE_URL]);
 
   const getImageUrl = (imgPath) => {
     if (!imgPath) return "/no-image.png"; // fallback image
     return imgPath.startsWith("http")
       ? imgPath
-      : `http://localhost:3001${imgPath}`;
+      : `${BASE_URL}${imgPath}`;
   };
 
   if (loading) return <p className="text-center mt-5">Loading...</p>;
