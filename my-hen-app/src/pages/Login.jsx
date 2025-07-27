@@ -6,6 +6,11 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  const BASE_URL =
+    window.location.hostname === "localhost"
+      ? "http://localhost:3001"
+      : "https://sellhear-buyhear.onrender.com"; // <-- your deployed backend URL
+
   const sendOtp = async () => {
     if (!email || !email.includes("@")) {
       alert("Please enter a valid email address.");
@@ -14,7 +19,7 @@ export default function Login() {
 
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:3001/auth/send-otp", {
+      const res = await fetch(`${BASE_URL}/auth/send-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
