@@ -5,8 +5,13 @@ export default function Punju() {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
 
+  const BASE_URL =
+    window.location.hostname === "localhost"
+      ? "http://localhost:3001"
+      : "https://sellhear-buyhear.onrender.com"; // ✅ Updated to match backend
+
   useEffect(() => {
-    fetch("http://localhost:3001/punjus")
+    fetch(`${BASE_URL}/punjus`)
       .then((res) => {
         if (!res.ok) {
           throw new Error(`HTTP error! Status: ${res.status}`);
@@ -18,7 +23,7 @@ export default function Punju() {
           ...product,
           image: product.image?.startsWith("http")
             ? product.image
-            : `http://localhost:3001${product.image}`, // ✅ Fixed: removed duplicate /uploads
+            : `${BASE_URL}${product.image}`,
         }));
         setProducts(processedData);
         setError(null);
@@ -27,7 +32,7 @@ export default function Punju() {
         console.error("Error fetching punjus:", err);
         setError("Failed to load fighting rooster data. Please try again later.");
       });
-  }, []);
+  }, [BASE_URL]);
 
   return (
     <div className="container mt-4">
@@ -63,5 +68,3 @@ export default function Punju() {
     </div>
   );
 }
-
-
