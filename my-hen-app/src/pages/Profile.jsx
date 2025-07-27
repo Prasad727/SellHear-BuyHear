@@ -33,13 +33,19 @@ export default function Profile() {
   };
 
   if (!userData) {
-    return <p>Redirecting to login...</p>;
+    return (
+      <div className="container mt-5 text-center">
+        <p>Redirecting to login...</p>
+      </div>
+    );
   }
 
   return (
     <div className="container mt-5">
-      <h2>👤</h2>
-      <p><strong>Email:</strong> {userData.email}</p>
+      <h2>👤 Profile</h2>
+      <p>
+        <strong>Email:</strong> {userData.email}
+      </p>
       <button className="btn btn-danger mt-3" onClick={handleLogout}>
         🚪 Logout
       </button>
