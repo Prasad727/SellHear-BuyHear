@@ -18,7 +18,7 @@ const PORT = process.env.PORT || 3001;
 // ─── Middlewares ───────────────────────────────────────────
 app.use(
   cors({
-    origin: "https://sellhearbuyhear.onrender.com", // your frontend Render domain
+    origin: "https://sellhearbuyhear.onrender.com", // ✅ your frontend domain
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
