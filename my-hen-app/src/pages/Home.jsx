@@ -10,7 +10,7 @@ export default function Home() {
   const BASE_URL =
     window.location.hostname === "localhost"
       ? "http://localhost:3001"
-      : "https://your-render-backend.onrender.com"; // Replace with your actual Render URL
+      : "https://sellhear-buyhear.onrender.com"; // ✅ Updated to your actual Render backend
 
   useEffect(() => {
     const fetchData = async () => {
