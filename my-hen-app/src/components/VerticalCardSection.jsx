@@ -1,11 +1,12 @@
-// ✅ UPDATED VerticalCardSection.jsx
 import React from "react";
 import { Link } from "react-router-dom";
 
 const VerticalCardSection = ({ title, linkTo, products = [], type }) => {
   const getImageUrl = (imgPath) => {
     if (!imgPath) return "https://via.placeholder.com/300x200?text=No+Image";
-    return imgPath.startsWith("http") ? imgPath : imgPath; // Image from Cloudinary already has full URL
+    // Uncomment below to debug image URLs:
+    // console.log("Image path:", imgPath);
+    return imgPath.startsWith("http") ? imgPath : imgPath;
   };
 
   return (
@@ -21,7 +22,7 @@ const VerticalCardSection = ({ title, linkTo, products = [], type }) => {
               <div style={{ height: "200px", overflow: "hidden" }}>
                 <img
                   src={getImageUrl(product.image || product.Image)}
-                  alt={product.name || product.Name}
+                  alt={product.name || product.Name || "Product image"}
                   className="card-img-top"
                   style={{ width: "100%", height: "100%", objectFit: "cover" }}
                 />
@@ -47,14 +48,3 @@ const VerticalCardSection = ({ title, linkTo, products = [], type }) => {
 };
 
 export default VerticalCardSection;
-
-
-// ✅ NOTES:
-// 1. No need to prepend localhost or anything to Cloudinary image URLs, they're full URLs already.
-// 2. Your server stores the image as `req.file.path`, which is a Cloudinary URL.
-// 3. Your MongoDB data already includes valid image URLs after submission — previously stored items should work unless image path was broken.
-// 4. If some old image fields are relative or empty, fallback placeholder image handles them.
-
-// ✅ Optional Debugging Tip:
-// Log product.image inside getImageUrl to verify:
-// console.log("Image path:", imgPath);
