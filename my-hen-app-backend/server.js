@@ -228,6 +228,15 @@ app.post("/auth/verify-otp", (req, res) => {
   }
 });
 
+// ─── Serve Frontend (Production) ───────────────────────────
+const frontendPath = path.join(__dirname, "dist");
+if (fs.existsSync(frontendPath)) {
+  app.use(express.static(frontendPath));
+  app.get("*", (_, res) => {
+    res.sendFile(path.join(frontendPath, "index.html"));
+  });
+}
+
 // ─── Root Health Check ─────────────────────────────────────
 app.get("/", (_, res) => {
   res.send("✅ Backend is running!");
