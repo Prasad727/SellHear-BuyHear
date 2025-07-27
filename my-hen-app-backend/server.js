@@ -16,11 +16,14 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // ─── Middlewares ───────────────────────────────────────────
+const cors = require("cors");
+
 app.use(cors({
-  origin: "*",
-  methods: ["GET", "POST"],
+  origin: "https://sellhearbuyhear.onrender.com", // your frontend Render domain
+  methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
+
 app.use(express.json());
 app.use(helmet());
 
