@@ -1,0 +1,11 @@
+.body {
+   background-color: rgb(54, 53, 53);
+   margin-left: 10px;
+   margin-right: 10px;
+   margin-top: 10px;
+   margin-bottom: 10px;
+}
+/* In your CSS file (e.g., App.css) */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
