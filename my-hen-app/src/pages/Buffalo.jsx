@@ -4,12 +4,25 @@ import { Link } from "react-router-dom";
 export default function Buffalo() {
   const [buffaloes, setBuffaloes] = useState([]);
 
+  const BASE_URL =
+    window.location.hostname === "localhost"
+      ? "http://localhost:3001"
+      : "https://sellhear-buyhear.onrender.com"; // ✅ Works on Render too
+
   useEffect(() => {
-    fetch("http://localhost:3001/buffalo")
+    fetch(`${BASE_URL}/buffalo`)
       .then((res) => res.json())
-      .then((data) => setBuffaloes(data))
+      .then((data) => {
+        const processedData = data.map((buffalo) => ({
+          ...buffalo,
+          image: buffalo.image?.startsWith("http")
+            ? buffalo.image
+            : `${BASE_URL}${buffalo.image}`,
+        }));
+        setBuffaloes(processedData);
+      })
       .catch((err) => console.error("Buffalo fetch error:", err));
-  }, []);
+  }, [BASE_URL]);
 
   return (
     <div className="container mt-4">
@@ -19,11 +32,7 @@ export default function Buffalo() {
           <div className="col" key={buffalo._id}>
             <div className="card h-100 shadow rounded-4">
               <img
-                src={
-                  buffalo.image?.startsWith("http")
-                    ? buffalo.image
-                    : `http://localhost:3001${buffalo.image}`
-                }
+                src={buffalo.image}
                 className="card-img-top"
                 alt={buffalo.name}
                 style={{ height: "200px", objectFit: "cover" }}
