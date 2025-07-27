@@ -5,6 +5,11 @@ export default function OtpVerify() {
   const [otp, setOtp] = useState("");
   const navigate = useNavigate();
 
+  const BASE_URL =
+    window.location.hostname === "localhost"
+      ? "http://localhost:3001"
+      : "https://sellhear-buyhear.onrender.com"; // <-- your deployed backend URL
+
   const verifyOtp = async () => {
     const email = localStorage.getItem("pendingEmail");
     if (!email) {
@@ -14,7 +19,7 @@ export default function OtpVerify() {
     }
 
     try {
-      const res = await fetch("http://localhost:3001/auth/verify-otp", {
+      const res = await fetch(`${BASE_URL}/auth/verify-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, otp }),
