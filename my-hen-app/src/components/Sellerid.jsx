@@ -70,18 +70,25 @@ function Form({ title, fields }) {
     Object.entries(formData).forEach(([key, val]) => formToSend.append(key, val));
 
     try {
-      const res = await fetch(`http://localhost:3001/submit/${title}`, {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL || "http://localhost:3001"}/submit/${title}`, {
         method: "POST",
         body: formToSend,
       });
 
-      const data = await res.json();
-      if (res.ok) {
-        alert("Form submitted successfully!");
-        console.log(data.message);
+      const contentType = res.headers.get("content-type");
+      if (contentType && contentType.includes("application/json")) {
+        const data = await res.json();
+        if (res.ok) {
+          alert("Form submitted successfully!");
+          console.log(data.message);
+        } else {
+          alert("Submission failed: " + data.error);
+          console.warn("Server response:", data);
+        }
       } else {
-        alert("Submission failed: " + data.error);
-        console.warn("Server response:", data);
+        const text = await res.text();
+        console.error("Non-JSON response:", text);
+        alert("Server returned unexpected content.");
       }
     } catch (err) {
       console.error("Submit error:", err.message);
