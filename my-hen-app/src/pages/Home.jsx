@@ -7,10 +7,11 @@ export default function Home() {
   const [buffaloes, setBuffaloes] = useState([]);
   const [error, setError] = useState("");
 
+  // ✅ Adjusted to use correct Render backend URL
   const BASE_URL =
     window.location.hostname === "localhost"
       ? "http://localhost:3001"
-      : "https://sellhear-buyhear.onrender.com"; // ✅ Updated to your actual Render backend
+      : "https://sellhear-buyhear.onrender.com";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,7 +23,7 @@ export default function Home() {
         ]);
 
         if (!punjuRes.ok || !goatRes.ok || !buffaloRes.ok) {
-          throw new Error("One or more fetches failed");
+          throw new Error("One or more fetch requests failed.");
         }
 
         const [punjuData, goatData, buffaloData] = await Promise.all([
@@ -46,7 +47,7 @@ export default function Home() {
         setError("");
       } catch (err) {
         console.error("❌ Error fetching data:", err);
-        setError("Failed to load product data.");
+        setError("Failed to load product data. Please try again later.");
       }
     };
 
@@ -57,7 +58,7 @@ export default function Home() {
     <div>
       <VerticalCardSection
         title="Punju 🐓"
-        linkTo="/punjus"
+        linkTo="/punju"
         products={products}
         type="punju"
       />
@@ -73,7 +74,7 @@ export default function Home() {
         products={goats}
         type="goat"
       />
-      {error && <p className="text-red-500 mt-4 text-center">{error}</p>}
+      {error && <p className="text-red-500 text-center mt-4">{error}</p>}
     </div>
   );
 }
